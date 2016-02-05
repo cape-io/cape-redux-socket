@@ -1,0 +1,43 @@
+{
+  "name": "cape-redux-socket",
+  "version": "1.0.1",
+  "description": "Get custom information about a location object or path.",
+  "main": "lib/index.js",
+  "scripts": {
+    "compile": "babel src --out-dir lib",
+    "prepublish": "npm run compile",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cape-io/cape-redux-socket.git"
+  },
+  "keywords": [
+    "redux",
+    "sockets"
+  ],
+  "author": "Kai Curry",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cape-io/cape-redux-socket/issues"
+  },
+  "homepage": "https://github.com/cape-io/cape-redux-socket#readme",
+  "dependencies": {
+    "seamless-immutable": "^5.0.1"
+  },
+  "devDependencies": {
+    "babel": "^6.3.13",
+    "babel-cli": "^6.4.5",
+    "babel-core": "^6.3.21",
+    "babel-eslint": "^5.0.0-beta6",
+    "babel-loader": "^6.2.0",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-stage-2": "^6.3.13",
+    "eslint": "^1.10.3",
+    "eslint-config-airbnb": "4.x",
+    "eslint-config-import": "^0.9.1",
+    "eslint-loader": "^1.1.1",
+    "eslint-plugin-babel": "^3.0.0",
+    "eslint-plugin-import": "^0.12.1"
+  }
+}
