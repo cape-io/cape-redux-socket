@@ -51,6 +51,7 @@ export default function createSocketMiddleware(socket, options = {}) {
 
     return next => action => {
       const { emit, sendSocket, type, payload } = action
+      const state = store.getState()
       // We do not care about any action without type prop set.
       if (!type) return next(action)
       // Pass along any action with sendSocket set to false.
@@ -62,7 +63,7 @@ export default function createSocketMiddleware(socket, options = {}) {
         socket.emit(sendSocket, emit || payload)
       }
       // Prevent location actions from trigger.
-      if (store.getState().socket.presenter) {
+      if (state.socket && state.socket.presenter) {
         console.log('Subscribe mode prevented local action', type)
       } else {
         // Send most every action to the server. Whoa.
