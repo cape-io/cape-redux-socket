@@ -1,4 +1,12 @@
 import { connect, disconnect, JOINED } from './index'
+import Cookies from 'js-cookie'
+// Look in action.meta for cookie.
+function setSid({ cookie }) {
+  if (cookie) {
+    const { name, value, options } = cookie
+    Cookies.set(name, value, options)
+  }
+}
 
 function getSessionId() {
   return sessionStorage.sessionId || null
@@ -26,13 +34,12 @@ export default function createSocketMiddleware(socket, options = {}) {
       // If an action comes from the server do not send it back to the server.
       act.sendSocket = false
       store.dispatch(act)
-      switch (action.type) {
-        // Joined. Server returns valid sessionId.
-        case JOINED:
-          setSessionId(action.payload)
-          break
-        default:
+      // Joined. Server returns valid sessionId.
+      if (act.type === JOINED) {
+        setSessionId(act.payload)
       }
+      // This could/should really be its own middleware.
+      if (act.meta) setSid(act.meta)
     })
     // When the connection is established. Before any events.
     socket.on('connect', () => {
