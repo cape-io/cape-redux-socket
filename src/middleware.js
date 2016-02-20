@@ -1,10 +1,19 @@
-import { connect, disconnect, JOINED } from './index'
+import isEmpty from 'lodash/isEmpty'
+import merge from 'lodash/merge'
+
 import Cookies from 'js-cookie'
+import { connect, disconnect, JOINED } from './index'
 // Look in action.meta for cookie.
-function setSid({ cookie }) {
+function setSid(meta) {
+  const { cookie } = meta
   if (cookie) {
     const { name, value, options } = cookie
-    Cookies.set(name, value, options)
+    if (value) {
+      Cookies.set(name, value, options)
+    } else {
+      Cookies.remove(name, options)
+    }
+    delete meta.cookie
   }
 }
 
@@ -16,9 +25,14 @@ function setSessionId(id) {
   // console.log('setSessionId', id)
   sessionStorage.sessionId = id
 }
+export function getEmitAction(action) {
+  const cookieJar = Cookies.get()
+  if (isEmpty(cookieJar)) return action
+  // Add cookie information to action sent to server.
+  return merge({}, action, { meta: { cookie: cookieJar } })
+}
 
 // Should save presenter to sessionStorage too?
-
 // Socket.io socket = io(opts.location)
 export default function createSocketMiddleware(socket, options = {}) {
   // Defaults.
@@ -74,7 +88,7 @@ export default function createSocketMiddleware(socket, options = {}) {
         console.log('Subscribe mode prevented local action', type)
       } else {
         // Send most every action to the server. Whoa.
-        socket.emit(opts.eventName, action)
+        socket.emit(opts.eventName, getEmitAction(action))
         return next(action)
       }
     }
