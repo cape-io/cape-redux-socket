@@ -13,6 +13,7 @@ function setSid(meta) {
     } else {
       Cookies.remove(name, options)
     }
+    // Remove the cookie from the action. Do not send it along to other middleware or reducers.
     delete meta.cookie // eslint-disable-line no-param-reassign
   }
 }
