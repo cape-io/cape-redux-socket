@@ -13,7 +13,7 @@ function setSid(meta) {
     } else {
       Cookies.remove(name, options)
     }
-    delete meta.cookie
+    delete meta.cookie // eslint-disable-line no-param-reassign
   }
 }
 
