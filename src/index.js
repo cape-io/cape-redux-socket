@@ -35,7 +35,7 @@ export default function reducer(_state = defaultState, action) {
     case '@@INIT':
       return state.asMutable ? state : immutable(state)
     case CONNECT:
-      return state.set('connected', true)
+      return state.merge({ connected: true, sessionId: payload })
     case DISCONNECT:
       return state.merge({ connected: false, socketId: null, endTime: payload })
     case CONNECTED:
