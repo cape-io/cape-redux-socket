@@ -24,8 +24,8 @@
   "homepage": "https://github.com/cape-io/cape-redux-socket#readme",
   "dependencies": {
     "js-cookie": "^2.1.0",
-    "lodash": "^4.5.0",
-    "seamless-immutable": "^5.0.1"
+    "lodash": "^4.6.1",
+    "seamless-immutable": "^5.1.0"
   },
   "devDependencies": {
     "babel": "^6.3.13",
