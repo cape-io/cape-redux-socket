@@ -72,12 +72,12 @@ export default function createSocketMiddleware(socket, options = {}) {
     })
 
     return next => action => {
-      const { emit, sendSocket, type, payload } = action
+      const { emit, meta, sendSocket, type, payload } = action
       const state = store.getState()
       // We do not care about any action without type prop set.
       if (!type) return next(action)
       // Pass along any action with sendSocket set to false.
-      if (sendSocket === false || type.endsWith('_SUCCESS')) {
+      if (sendSocket === false || (meta && meta.sendSocket === false)) {
         return next(action)
       }
       // Allow actions to send an emit to server.

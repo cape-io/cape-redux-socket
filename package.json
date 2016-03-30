@@ -1,6 +1,6 @@
 {
   "name": "cape-redux-socket",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "Get custom information about a location object or path.",
   "main": "lib/index.js",
   "scripts": {
@@ -25,19 +25,18 @@
   "dependencies": {
     "js-cookie": "^2.1.0",
     "lodash": "^4.6.1",
-    "seamless-immutable": "^5.1.0"
+    "seamless-immutable": "^5.1.1"
   },
   "devDependencies": {
-    "babel": "^6.3.13",
-    "babel-cli": "^6.4.5",
-    "babel-core": "^6.3.21",
-    "babel-eslint": "^5.0.0-beta6",
-    "babel-preset-es2015": "^6.3.13",
-    "babel-preset-stage-1": "^6.3.13",
-    "eslint": "^1.10.3",
-    "eslint-config-airbnb": "4.x",
-    "eslint-config-import": "^0.9.1",
-    "eslint-plugin-babel": "^3.0.0",
-    "eslint-plugin-import": "^0.12.1"
+    "babel": "^6.5.2",
+    "babel-cli": "^6.6.5",
+    "babel-core": "^6.7.2",
+    "babel-eslint": "^6.0.0",
+    "babel-preset-es2015": "^6.6.0",
+    "babel-preset-stage-1": "^6.5.0",
+    "eslint": "^2.5.3",
+    "eslint-config-airbnb": "^6.1.0",
+    "eslint-plugin-babel": "^3.1.0",
+    "eslint-plugin-import": "^1.4.0"
   }
 }
