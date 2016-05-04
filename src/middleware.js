@@ -1,22 +1,7 @@
-import isEmpty from 'lodash/isEmpty'
-import merge from 'lodash/merge'
+import identity from 'lodash/identity'
 
-import Cookies from 'js-cookie'
 import { connect, disconnect, JOINED } from './index'
-// Look in action.meta for cookie.
-function setSid(meta) {
-  const { cookie } = meta
-  if (cookie) {
-    const { name, value, options } = cookie
-    if (value) {
-      Cookies.set(name, value, options)
-    } else {
-      Cookies.remove(name, options)
-    }
-    // Remove the cookie from the action. Do not send it along to other middleware or reducers.
-    delete meta.cookie // eslint-disable-line no-param-reassign
-  }
-}
+
 
 function getSessionId() {
   return sessionStorage.sessionId || null
@@ -26,12 +11,6 @@ function setSessionId(id) {
   // console.log('setSessionId', id)
   sessionStorage.sessionId = id
 }
-export function getEmitAction(action) {
-  const cookieJar = Cookies.get()
-  if (isEmpty(cookieJar)) return action
-  // Add cookie information to action sent to server.
-  return merge({}, action, { meta: { cookie: cookieJar } })
-}
 
 // Should save presenter to sessionStorage too?
 // Socket.io socket = io(opts.location)
@@ -39,6 +18,7 @@ export default function createSocketMiddleware(socket, options = {}) {
   // Defaults.
   const opts = {
     eventName: 'action',
+    getEmitAction: identity,
     ...options,
   }
 
@@ -53,8 +33,6 @@ export default function createSocketMiddleware(socket, options = {}) {
       if (act.type === JOINED) {
         setSessionId(act.payload)
       }
-      // This could/should really be its own middleware.
-      if (act.meta) setSid(act.meta)
     })
     // When the connection is established. Before any events.
     socket.on('connect', () => {
@@ -89,9 +67,10 @@ export default function createSocketMiddleware(socket, options = {}) {
         console.log('Subscribe mode prevented local action', type)
       } else {
         // Send most every action to the server. Whoa.
-        socket.emit(opts.eventName, getEmitAction(action))
-        return next(action)
+        socket.emit(opts.eventName, opts.getEmitAction(action))
+        next(action)
       }
+      return undefined
     }
   }
 }
