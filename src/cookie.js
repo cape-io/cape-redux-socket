@@ -23,7 +23,7 @@ export function addCookieMeta(action) {
 
 // Look into every action for meta.cookie.
 export function cookieMiddleware() {
-  return () => next => action => {
+  return next => action => {
     if (action.meta && action.meta.cookie) {
       setSid(action.meta)
     }

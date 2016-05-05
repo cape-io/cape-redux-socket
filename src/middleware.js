@@ -21,7 +21,6 @@ export default function createSocketMiddleware(socket, options = {}) {
     getEmitAction: identity,
     ...options,
   }
-
   return store => {
     // Wire socket.io to dispatch actions sent by the server.
     socket.on(opts.eventName, (action) => {
@@ -68,9 +67,8 @@ export default function createSocketMiddleware(socket, options = {}) {
       } else {
         // Send most every action to the server. Whoa.
         socket.emit(opts.eventName, opts.getEmitAction(action))
-        next(action)
       }
-      return undefined
+      return next(action)
     }
   }
 }
