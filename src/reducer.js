@@ -5,8 +5,9 @@ import {
   CONNECT, CONNECTED, DISCONNECT, GUEST_JOIN, GUEST_LEAVE, JOINED, SUBSCRIBE,
 } from './actions'
 
-const defaultState = immutable({
+export const defaultState = immutable({
   connected: false,
+  connect: true,
   endTime: null,
   presenter: null,
   sessionId: null,
@@ -16,9 +17,11 @@ const defaultState = immutable({
   subscriber: {},
 })
 export const reducers = {
-  [CONNECT]: (state, sessionId) => state.merge({ connected: true, sessionId }),
-  [CONNECTED]: (state, payload) => state.set('connected', true).merge(payload),
-  [DISCONNECT]: (state, endTime) => state.merge({ connected: false, socketId: null, endTime }),
+  [CONNECT]: (state, { sessionId }) => state.merge({ connect: true, sessionId }),
+  [CONNECTED]: (state, payload) =>
+    state.merge({ connected: true, connect: false }).merge(payload),
+  [DISCONNECT]: (state, endTime) =>
+    state.merge({ connected: false, connect: false, socketId: null, endTime }),
   [GUEST_JOIN]: (state, payload) => state.setIn([ 'subscriber', payload ], { id: payload }),
   [GUEST_LEAVE]: (state, payload) => state.set('subscriber', state.subscriber.without(payload)),
   [JOINED]: (state, payload) => state.set('sessionId', payload),

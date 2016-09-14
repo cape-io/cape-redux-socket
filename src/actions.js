@@ -2,6 +2,7 @@ import noop from 'lodash/noop'
 
 import createAction from './createAction'
 
+// Sent from client to server on socket init.
 export const CONNECT = 'socket/CONNECT'
 export const connect = createAction(CONNECT)
 
@@ -40,4 +41,4 @@ export const apiFailure = createAction(API_FAILURE, noop)
 export const API_REQUEST = 'socket/API_REQUEST'
 export const apiRequest = createAction(API_REQUEST)
 export const API_SUCCESS = 'socket/API_SUCCESS'
-export const apiSuccess = createAction(API_SUCCESS, (entities) => ({ entities }))
+export const apiSuccess = createAction(API_SUCCESS, entities => ({ entities }))
