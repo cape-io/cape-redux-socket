@@ -1,14 +1,7 @@
-import defaultTo from 'lodash/defaultTo'
-import flow from 'lodash/flow'
-import isString from 'lodash/isString'
-import negate from 'lodash/negate'
-import nthArg from 'lodash/nthArg'
-import over from 'lodash/over'
-import overEvery from 'lodash/overEvery'
-import property from 'lodash/property'
+import {
+  defaultTo, flow, isString, negate, nthArg, over, overEvery, property, spread, unary,
+} from 'lodash'
 import result from 'lodash/fp/result'
-import spread from 'lodash/spread'
-import unary from 'lodash/unary'
 
 import { getPresenter } from './select'
 import { isFalse } from './utils'
