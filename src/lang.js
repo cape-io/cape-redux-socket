@@ -10,7 +10,8 @@ import { getPresenter } from './select'
 import { isFalse } from './utils'
 
 export function getSendSocket({ sendSocket, meta }) {
-  return sendSocket || get(meta, 'sendSocket')
+  if (isFalse(sendSocket)) return sendSocket
+  return get(meta, 'sendSocket')
 }
 // Require sendSocket to not be a strict false.
 export const allowEmit = flow(getSendSocket, negate(isFalse))
