@@ -1,6 +1,7 @@
 import test from 'tape'
+import constant from 'lodash/constant'
 
-import { allowEmit, getSendSocket, noPresenter, validAction } from '../src/lang'
+import { allowEmit, doEmitAction, getSendSocket, noPresenter, validAction } from '../src/lang'
 
 import { invalid, send1, halt1, halt2, state, state2 } from './mock'
 
@@ -24,8 +25,19 @@ test('validAction', (t) => {
   t.false(validAction(), 'undefined, false')
   t.end()
 })
+const gs1 = constant(state)
+const gs2 = constant(state2)
 test('noPresenter', (t) => {
-  t.true(noPresenter({ getState: () => state }), 'no presenter')
-  t.false(noPresenter({ getState: () => state2 }), 'has presenter')
+  t.true(noPresenter(send1, { getState: gs1 }), 'no presenter')
+  t.false(noPresenter(send1, { getState: gs2 }), 'has presenter')
+  t.end()
+})
+test('doEmitAction', (t) => {
+  const store = { getState: gs1 }
+  t.ok(doEmitAction(send1, store), 'all good')
+  t.false(doEmitAction(halt1, store), 'emitSocket false')
+  store.getState = gs2
+  t.false(doEmitAction(send1, store), 'presenter prevent send')
+  t.false(doEmitAction(halt1, store), 'emitSocket false')
   t.end()
 })
