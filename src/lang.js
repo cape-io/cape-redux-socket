@@ -1,15 +1,15 @@
 import {
-  defaultTo, flow, isString, negate, nthArg, over, overEvery, property, spread, unary,
+  flow, isString, negate, nthArg, overEvery, property, unary,
 } from 'lodash'
 import result from 'lodash/fp/result'
 
 import { getPresenter } from './select'
-import { isFalse } from './utils'
+import { isFalse, getDefault } from './utils'
 // Get sendSocket or meta.sendSocket. Invalid FSA prop has priority?
-export const getSendSocket = flow(
-  over([ property('sendSocket'), property('meta.sendSocket') ]),
-  spread(defaultTo)
-)
+export const getSendSocket = getDefault('sendSocket', 'meta.sendSocket')
+export const getEventBody = getDefault('meta.emit', 'payload')
+// export const getEventBody = over([ property('meta.emit'), property('payload') ])
+
 // Require sendSocket to not be a strict false.
 export const allowEmit = flow(getSendSocket, negate(isFalse))
 // We do not care about any action without type prop set.

@@ -17,6 +17,11 @@ export const send2 = {
   },
   sendSocket: 'foo',
 }
+export const send3 = {
+  type: 'something/GREAT',
+  meta: { sendSocket: 'bar', emit: 'coffee' },
+  payload: { id: 'foo' },
+}
 export const invalid = {
   payload: 'bar',
 }

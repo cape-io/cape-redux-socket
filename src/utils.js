@@ -1,3 +1,4 @@
+import deafult2 from 'lodash/defaultTo'
 import defaultTo from 'lodash/fp/defaultTo'
 import flow from 'lodash/flow'
 import identical from 'lodash/fp/eq'
@@ -10,7 +11,7 @@ export const isFalse = identical(false)
 export function getDefault(path1, path2) {
   return flow(
     over([ property(path1), property(path2) ]),
-    spread(defaultTo)
+    spread(deafult2)
   )
 }
 export function select(selector, path, defaultValue = null) {

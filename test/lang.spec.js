@@ -2,15 +2,22 @@ import test from 'tape'
 import constant from 'lodash/constant'
 
 import {
-  allowEmit, doEmitAction, doEmitEvent, getSendSocket, noPresenter, validAction,
+  allowEmit, doEmitAction, doEmitEvent, getEventBody, getSendSocket, noPresenter, validAction,
 } from '../src/lang'
 
-import { invalid, send1, send2, halt1, halt2, state, state2 } from './mock'
+import { invalid, send1, send2, send3, halt1, halt2, state, state2 } from './mock'
 
 test('getSendSocket', (t) => {
   t.equal(getSendSocket(send1), undefined, 'undefined when sendSocket not set.')
+  t.equal(getSendSocket(send2), 'foo', 'sendSocket string')
+  t.equal(getSendSocket(send3), 'bar', 'meta.sendSocket string')
   t.equal(getSendSocket(halt1), false, 'find false on sendSocket')
   t.equal(getSendSocket(halt2), false, 'find false on meta.sendSocket')
+  t.end()
+})
+test('getEventBody', (t) => {
+  t.equal(getEventBody(send2), send2.payload, 'sendSocket string')
+  t.equal(getEventBody(send3), 'coffee', 'meta.sendSocket string') // BROKEN
   t.end()
 })
 test('allowEmit', (t) => {
