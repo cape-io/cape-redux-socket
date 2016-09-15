@@ -14,7 +14,7 @@ export const getSendSocket = flow(
 export const allowEmit = flow(getSendSocket, negate(isFalse))
 // We do not care about any action without type prop set.
 export const validAction = unary(overEvery([ property('type'), allowEmit ]))
-// Check the 2nd argument for getState().presenter.
+// Check the 2nd argument for getState().presenter. Make sure it's not a string.
 export const noPresenter = flow(nthArg(1), result('getState'), getPresenter, negate(isString))
 // Check if sendSocket is a string.
 export const sendIsString = unary(flow(getSendSocket, isString))
