@@ -10,6 +10,13 @@ export const send1 = {
     id: 'foo',
   },
 }
+export const send2 = {
+  type: 'something/GREAT',
+  payload: {
+    id: 'foo',
+  },
+  sendSocket: 'foo',
+}
 export const invalid = {
   payload: 'bar',
 }

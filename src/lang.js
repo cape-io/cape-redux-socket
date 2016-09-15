@@ -21,7 +21,8 @@ export const getSendSocket = flow(
 export const allowEmit = flow(getSendSocket, negate(isFalse))
 // We do not care about any action without type prop set.
 export const validAction = unary(overEvery([ property('type'), allowEmit ]))
+// Check the 2nd argument for getState().presenter.
 export const noPresenter = flow(nthArg(1), result('getState'), getPresenter, negate(isString))
-export const doEmitAction = overEvery([ validAction, noPresenter ])
-export const sendIsString = flow(getSendSocket, isString)
+export const sendIsString = unary(flow(getSendSocket, isString))
+export const doEmitAction = overEvery([ validAction, noPresenter, negate(sendIsString) ])
 export const doEmitEvent = overEvery([ validAction, sendIsString ])

@@ -3,7 +3,7 @@ import constant from 'lodash/constant'
 
 import { allowEmit, doEmitAction, getSendSocket, noPresenter, validAction } from '../src/lang'
 
-import { invalid, send1, halt1, halt2, state, state2 } from './mock'
+import { invalid, send1, send2, halt1, halt2, state, state2 } from './mock'
 
 test('getSendSocket', (t) => {
   t.equal(getSendSocket(send1), undefined, 'undefined when sendSocket not set.')
@@ -35,6 +35,7 @@ test('noPresenter', (t) => {
 test('doEmitAction', (t) => {
   const store = { getState: gs1 }
   t.ok(doEmitAction(send1, store), 'all good')
+  t.false(doEmitAction(send2, store), 'not when emitSocket string')
   t.false(doEmitAction(halt1, store), 'emitSocket false')
   store.getState = gs2
   t.false(doEmitAction(send1, store), 'presenter prevent send')
