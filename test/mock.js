@@ -10,6 +10,9 @@ export const send1 = {
     id: 'foo',
   },
 }
+export const invalid = {
+  payload: 'bar',
+}
 export const halt1 = {
   type: 'something/GREAT',
   payload: {
