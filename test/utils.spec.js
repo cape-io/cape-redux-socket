@@ -1,6 +1,6 @@
 import test from 'tape'
 
-import { simpleSelector } from '../src/utils'
+import { isFalse, simpleSelector } from '../src/utils'
 
 import { getSessionId, getPresenter } from '../src/select'
 
@@ -14,4 +14,10 @@ test('simpleSelector', (t) => {
   }
   const simple = simpleSelector(getSessionId, getPresenter, checkAnswer)
   simple(state2)
+})
+test('isFalse', (t) => {
+  t.false(isFalse(true), 'true is not false')
+  t.false(isFalse(null), 'null is not false')
+  t.true(isFalse(false), 'false is false')
+  t.end()
 })

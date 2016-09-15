@@ -1,8 +1,11 @@
 import defaultTo from 'lodash/fp/defaultTo'
 import flow from 'lodash/flow'
+import identical from 'lodash/fp/eq'
 import over from 'lodash/over'
 import property from 'lodash/property'
 import spread from 'lodash/spread'
+
+export const isFalse = identical(false)
 
 export function select(selector, path, defaultValue = null) {
   if (defaultValue) return flow(selector, property(path), defaultTo(defaultValue))
