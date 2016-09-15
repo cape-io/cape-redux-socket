@@ -7,6 +7,12 @@ import spread from 'lodash/spread'
 
 export const isFalse = identical(false)
 
+export function getDefault(path1, path2) {
+  return flow(
+    over([ property(path1), property(path2) ]),
+    spread(defaultTo)
+  )
+}
 export function select(selector, path, defaultValue = null) {
   if (defaultValue) return flow(selector, property(path), defaultTo(defaultValue))
   return flow(selector, property(path))
