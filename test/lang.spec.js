@@ -1,7 +1,9 @@
 import test from 'tape'
 import constant from 'lodash/constant'
 
-import { allowEmit, doEmitAction, getSendSocket, noPresenter, validAction } from '../src/lang'
+import {
+  allowEmit, doEmitAction, doEmitEvent, getSendSocket, noPresenter, validAction,
+} from '../src/lang'
 
 import { invalid, send1, send2, halt1, halt2, state, state2 } from './mock'
 
@@ -40,5 +42,12 @@ test('doEmitAction', (t) => {
   store.getState = gs2
   t.false(doEmitAction(send1, store), 'presenter prevent send')
   t.false(doEmitAction(halt1, store), 'emitSocket false')
+  t.end()
+})
+test('doEmitEvent', (t) => {
+  t.false(doEmitEvent(send1), 'no sendSocket')
+  t.false(doEmitEvent(halt1), 'invalid1')
+  t.false(doEmitEvent(halt2), 'invalid2')
+  t.true(doEmitEvent(send2), 'sendSocket string')
   t.end()
 })
