@@ -1,6 +1,6 @@
 import noop from 'lodash/noop'
 
-import createAction from 'cape-redux'
+import { createAction } from 'cape-redux'
 
 // Sent from client to server on socket init.
 export const CONNECT = 'socket/CONNECT'
