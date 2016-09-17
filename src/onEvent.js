@@ -1,5 +1,7 @@
 import flow from 'lodash/flow'
+import partial from 'lodash/partial'
 import set from 'lodash/fp/set'
+import { addListener } from 'cape-redux'
 
 import { getSessionId, connectSelector } from './select'
 import { connect, disconnect } from './actions'
@@ -24,7 +26,7 @@ export function onConnect({ dispatch, getState }) {
 export function onDisconnect({ dispatch }) {
   return dispatch(disconnect)
 }
-
+export const sessionIdListener = partial(addListener, getSessionId)
 // function getSessionId() {
 //   return window.sessionStorage.sessionId || null
 // }

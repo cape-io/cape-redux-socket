@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/cape-io/cape-redux-socket#readme",
   "dependencies": {
-    "cape-redux": "^1.0.1",
+    "cape-redux": "^1.1.1",
     "cape-select": "^1.0.1",
     "js-cookie": "^2.1.3",
     "lodash": "^4.15.0",
