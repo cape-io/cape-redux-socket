@@ -5,7 +5,7 @@ import { getSessionId, connectSelector } from './select'
 import { connect, disconnect } from './actions'
 import { doEmitAction, doEmitEvent, getSendSocket, getEventBody } from './lang'
 
-export function onClientAction(action, store, emit, { eventName, getEmitAction }) {
+export function onClientAction(store, emit, { eventName, getEmitAction }, action) {
   // Send most every action to the server. Whoa.
   if (doEmitAction(action, store)) emit(eventName, getEmitAction(action))
   // Allow actions to emit custom things. Probably a hack overloading an action like that?
@@ -22,7 +22,7 @@ export function onConnect({ dispatch, getState }) {
 }
 // Client disconnected from server.
 export function onDisconnect({ dispatch }) {
-  return flow(disconnect, dispatch)
+  return dispatch(disconnect)
 }
 
 // function getSessionId() {

@@ -19,7 +19,7 @@ export default function createSocketMiddleware(socket, options = {}) {
     socket.on('disconnect', onDisconnect(store))
 
     return next => (action) => {
-      onClientAction(action, store, socket.emit, opts)
+      onClientAction(store, socket.emit, opts, action)
       return next(action)
     }
   }

@@ -2,13 +2,13 @@ import {
   flow, isString, negate, nthArg, overEvery, property, unary,
 } from 'lodash'
 import result from 'lodash/fp/result'
+import { isFalse, getDefault } from 'cape-select'
 
 import { getPresenter } from './select'
-import { isFalse, getDefault } from './utils'
 // Get sendSocket or meta.sendSocket. Invalid FSA prop has priority?
-export const getSendSocket = getDefault('sendSocket', 'meta.sendSocket')
+export const getSendSocket = getDefault('meta.sendSocket', 'sendSocket')
+// The content to send on the custom emit type.
 export const getEventBody = getDefault('meta.emit', 'payload')
-// export const getEventBody = over([ property('meta.emit'), property('payload') ])
 
 // Require sendSocket to not be a strict false.
 export const allowEmit = flow(getSendSocket, negate(isFalse))

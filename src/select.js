@@ -1,7 +1,7 @@
 import property from 'lodash/property'
 import { createStructuredSelector } from 'reselect'
 
-import { select } from './utils'
+import { select } from 'cape-select'
 
 export const getSocket = property('socket')
 export const getSessionId = select(getSocket, 'sessionId')
