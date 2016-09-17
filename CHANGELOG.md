@@ -1,3 +1,7 @@
+## 2.2.0
+
+Code refactor. sessionIdListener(store, onChange)
+
 ## 2.0.0
 
 Split cookie handling code into its own middleware. Handle meta.cookie of any action regardless of socket. @TODO should/could be split into its own module. Restructure module files.

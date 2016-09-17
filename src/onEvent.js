@@ -27,11 +27,3 @@ export function onDisconnect({ dispatch }) {
   return dispatch(disconnect)
 }
 export const sessionIdListener = partial(addListener, getSessionId)
-// function getSessionId() {
-//   return window.sessionStorage.sessionId || null
-// }
-// // Insert sessionId.
-// function setSessionId({ socketId }) {
-//   // console.log('setSessionId', id)
-//   window.sessionStorage.sessionId = socketId
-// }
