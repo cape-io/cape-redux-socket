@@ -20,7 +20,7 @@ export function onServerAction({ dispatch }) {
 }
 // Every time client first connects to server.
 export function onConnect({ dispatch, getState }) {
-  return flow(getState, getSessionId, connectSelector, connect, dispatch)
+  return flow(getState, connectSelector, connect, dispatch)
 }
 // Client disconnected from server.
 export function onDisconnect({ dispatch }) {
