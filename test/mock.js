@@ -1,4 +1,5 @@
-import { defaultState } from '../src/reducer'
+import { createStore, combineReducers } from 'redux'
+import socket, { defaultState } from '../src/reducer'
 
 export const state = { socket: defaultState }
 export const change = { presenter: 'kai', sessionId: 'abc123' }
@@ -44,3 +45,4 @@ export const halt2 = {
 export const action = {
   send1, halt1, halt2,
 }
+export const store = createStore(combineReducers({ socket }))

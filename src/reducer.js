@@ -16,10 +16,17 @@ export const defaultState = immutable({
   startTime: null,
   subscriber: {},
 })
+export function connectedState({ sessionId }, payload) {
+  return {
+    ...payload,
+    connected: true,
+    connect: false,
+    sessionId: sessionId || payload.socketId,
+  }
+}
 export const reducers = {
   [CONNECT]: (state, { sessionId }) => state.merge({ connect: true, sessionId }),
-  [CONNECTED]: (state, payload) =>
-    state.merge({ connected: true, connect: false }).merge(payload),
+  [CONNECTED]: (state, payload) => state.merge(connectedState(state, payload)),
   [DISCONNECT]: (state, endTime) =>
     state.merge({ connected: false, connect: false, socketId: null, endTime }),
   [GUEST_JOIN]: (state, payload) => state.setIn([ 'subscriber', payload ], { id: payload }),

@@ -2,7 +2,7 @@ import { defaults, identity } from 'lodash'
 
 import { onServerAction, onClientAction, onConnect, onDisconnect } from './onEvent'
 
-const defaultOptions = {
+export const defaultOptions = {
   eventName: 'action',
   getEmitAction: identity,
 }
