@@ -1,6 +1,9 @@
 ## 2.2.1
 
-Tests and bug fixes.
+* Tests and bug fixes.
+* Added `sid` to cookie within `connected()` action.
+* Cleaned up cookie.js
+* Added `hasCookie()` to lang.js
 
 ## 2.2.0
 
