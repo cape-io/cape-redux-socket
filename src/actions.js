@@ -1,7 +1,8 @@
-import noop from 'lodash/noop'
+import { curry, noop } from 'lodash'
 
 import { createAction } from 'cape-redux'
 
+export const createCookie = curry((name, value) => ({ cookie: { name, value } }))
 // Sent from client to server on socket init.
 export const CONNECT = 'socket/CONNECT'
 export const connect = createAction(CONNECT)
@@ -11,7 +12,7 @@ export function connectedPayload(socketId, siteId) {
   const now = new Date()
   return { siteId, socketId, startTime: now.toString() }
 }
-export const connected = createAction(CONNECTED, connectedPayload)
+export const connected = createAction(CONNECTED, connectedPayload, createCookie('sid'))
 
 export const DISCONNECT = 'socket/DISCONNECT'
 export function disconnectPayload() {
