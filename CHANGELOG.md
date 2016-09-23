@@ -1,3 +1,7 @@
+## 2.2.1
+
+Tests and bug fixes.
+
 ## 2.2.0
 
 Code refactor. sessionIdListener(store, onChange)
