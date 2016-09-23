@@ -1,6 +1,7 @@
 import {
   flow, isString, negate, nthArg, overEvery, property, unary,
 } from 'lodash'
+import has from 'lodash/fp/has'
 import result from 'lodash/fp/result'
 import { isFalse, getDefault } from 'cape-lodash'
 
@@ -22,3 +23,5 @@ export const sendIsString = unary(flow(getSendSocket, isString))
 export const doEmitAction = overEvery([ validAction, noPresenter, negate(sendIsString) ])
 // Is this a custom emit event that should be sent to the server?
 export const doEmitEvent = overEvery([ validAction, sendIsString ])
+// Pass it an action. Returns true if it has a cookie.
+export const hasCookie = has('meta.cookie.name')

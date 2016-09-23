@@ -16,11 +16,12 @@ export const send2 = {
   payload: {
     id: 'foo',
   },
+  meta: { cookie: {} },
   sendSocket: 'foo',
 }
 export const send3 = {
   type: 'something/GREAT',
-  meta: { sendSocket: 'bar', emit: 'coffee' },
+  meta: { sendSocket: 'bar', emit: 'coffee', cookie: { name: 'sid', value: 'xyz' } },
   payload: { id: 'foo' },
 }
 export const invalid = {

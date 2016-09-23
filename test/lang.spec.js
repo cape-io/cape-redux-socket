@@ -2,7 +2,8 @@ import test from 'tape'
 import constant from 'lodash/constant'
 
 import {
-  allowEmit, doEmitAction, doEmitEvent, getEventBody, getSendSocket, noPresenter, validAction,
+  allowEmit, doEmitAction, doEmitEvent, getEventBody, getSendSocket,
+  noPresenter, validAction, hasCookie,
 } from '../src/lang'
 
 import { invalid, send1, send2, send3, halt1, halt2, state, state2 } from './mock'
@@ -56,5 +57,11 @@ test('doEmitEvent', (t) => {
   t.false(doEmitEvent(halt1), 'invalid1')
   t.false(doEmitEvent(halt2), 'invalid2')
   t.true(doEmitEvent(send2), 'sendSocket string')
+  t.end()
+})
+test('hasCookie', (t) => {
+  t.false(hasCookie(send1))
+  t.false(hasCookie(send2))
+  t.true(hasCookie(send3))
   t.end()
 })
