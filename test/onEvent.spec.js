@@ -19,10 +19,10 @@ test('onClientAction', (t) => {
     t.equal(eventName, 'action', 'action')
     t.equal(act, send1)
   }
-  onClientAction(store, emit, defaultOptions, send1)
+  onClientAction(store, { emit }, defaultOptions, send1)
   // Do nothin.
-  onClientAction(store, emit, defaultOptions, invalid)
-  onClientAction(store, emit, defaultOptions)
+  onClientAction(store, { emit }, defaultOptions, invalid)
+  onClientAction(store, { emit }, defaultOptions)
 })
 test('onServerAction', (t) => {
   t.plan(1)
