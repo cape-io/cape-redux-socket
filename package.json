@@ -1,6 +1,6 @@
 {
   "name": "cape-redux-socket",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Get custom information about a location object or path.",
   "main": "lib/index.js",
   "scripts": {
@@ -23,13 +23,12 @@
   },
   "homepage": "https://github.com/cape-io/cape-redux-socket#readme",
   "dependencies": {
-    "cape-lodash": "^1.1.0",
-    "cape-redux": "^1.1.1",
-    "cape-select": "^1.0.2",
+    "cape-lodash": "^1.5.0",
+    "cape-redux": "^1.6.0",
+    "cape-select": "^2.2.1",
     "js-cookie": "^2.1.3",
-    "lodash": "^4.15.0",
-    "reselect": "^2.5.3",
-    "seamless-immutable": "^6.1.1"
+    "lodash": "^4.16.6",
+    "reselect": "^2.5.4"
   },
   "devDependencies": {
     "babel-cli": "^6.14.0",
