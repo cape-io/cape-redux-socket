@@ -3,7 +3,7 @@ import socket, { defaultState } from '../src/reducer'
 
 export const state = { socket: defaultState }
 export const change = { presenter: 'kai', sessionId: 'abc123' }
-export const state2 = { socket: defaultState.merge(change) }
+export const state2 = { socket: { ...defaultState, ...change } }
 
 export const send1 = {
   type: 'something/GREAT',

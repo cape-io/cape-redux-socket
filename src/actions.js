@@ -1,25 +1,37 @@
-import { curry, noop } from 'lodash'
+import { cond, curry, noop, nthArg, stubTrue } from 'lodash'
 
 import { createAction } from 'cape-redux'
 
-export const createCookie = curry((name, value) => ({ cookie: { name, value } }))
-// Sent from client to server on socket init.
-export const CONNECT = 'socket/CONNECT'
-export const connect = createAction(CONNECT)
+export function now() {
+  return new Date().toString()
+}
 
+export const createCookie = curry((name, value) => ({ cookie: { name, value } }))
+export const CONNECT = 'socket/CONNECT'
+// Sent from client to server on socket init.
+// @see middelware/createSocketMiddleware()
+export function connectPayload(sessionId) {
+  return { sessionId, startTime: now() }
+}
+export const connect = createAction(CONNECT, connectPayload)
+
+// New, no cookie connection event sent from server.
 export const CONNECTED = 'socket/CONNECTED'
-export function connectedPayload(socketId, siteId) {
-  const now = new Date()
-  return { siteId, socketId, startTime: now.toString() }
+export function connectedPayload(socketId, siteId, sessionId) {
+  return { sessionId, siteId, socketId, dateModified: now() }
 }
 export const connected = createAction(CONNECTED, connectedPayload, createCookie('sid'))
+// Cookie connection event sent from server.
+export const RECONNECTED = 'socket/RECONNECTED'
+export const reconnected = createAction(RECONNECTED, connectedPayload)
+
+export const connecting = cond([
+  [ nthArg(2), reconnected ],
+  [ stubTrue, connected ],
+])
 
 export const DISCONNECT = 'socket/DISCONNECT'
-export function disconnectPayload() {
-  const now = new Date()
-  return now.toString()
-}
-export const disconnect = createAction(DISCONNECT, disconnectPayload)
+export const disconnect = createAction(DISCONNECT, now)
 
 export const FEEDBACK = 'socket/FEEDBACK'
 export const feedback = createAction(FEEDBACK)

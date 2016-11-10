@@ -3,7 +3,7 @@ import partial from 'lodash/partial'
 import set from 'lodash/fp/set'
 import { addListener } from 'cape-redux'
 
-import { getSessionId, connectSelector } from './select'
+import { getSessionId } from './select'
 import { connect, disconnect } from './actions'
 import { doEmitAction, doEmitEvent, getSendSocket, getEventBody } from './lang'
 
@@ -23,7 +23,7 @@ export function onServerAction({ dispatch }) {
 }
 // Every time client first connects to server. Sends socket.sessionId
 export function onConnect({ dispatch, getState }) {
-  return flow(getState, connectSelector, connect, dispatch)
+  return flow(getState, getSessionId, connect, dispatch)
 }
 // Client disconnected from server.
 export function onDisconnect({ dispatch }) {

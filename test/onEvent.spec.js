@@ -32,14 +32,16 @@ test('onServerAction', (t) => {
   onServerAction({ dispatch })(send1)
 })
 test('onConnect', (t) => {
-  t.plan(2)
+  t.plan(4)
   function dispatch(act) {
-    t.deepEqual(act, { type: 'socket/CONNECT', payload: { sessionId: null } })
+    t.equal(act.type, 'socket/CONNECT')
+    t.equal(act.payload.sessionId, null)
   }
   onConnect({ ...store, dispatch })()
   store.dispatch(connected('abc'))
   function dispatch2(act) {
-    t.deepEqual(act, { type: 'socket/CONNECT', payload: { sessionId: 'abc' } })
+    t.equal(act.type, 'socket/CONNECT')
+    t.equal(act.payload.sessionId, 'abc')
   }
   onConnect({ ...store, dispatch: dispatch2 })()
 })

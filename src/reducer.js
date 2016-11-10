@@ -1,40 +1,50 @@
-import immutable from 'seamless-immutable'
-import isFunction from 'lodash/isFunction'
-
+import { createReducer } from 'cape-redux'
+import { pick } from 'lodash'
 import {
-  CONNECT, CONNECTED, DISCONNECT, GUEST_JOIN, GUEST_LEAVE, JOINED, SUBSCRIBE,
+  CONNECT, CONNECTED, DISCONNECT, RECONNECTED,
 } from './actions'
 
-export const defaultState = immutable({
+export const defaultState = {
   connected: false,
-  connect: true,
+  connect: false,
+  counter: 0,
+  dateModified: null,
   endTime: null,
   presenter: null,
+  reconnected: false,
   sessionId: null,
   siteId: null,
-  socketId: null,
+  socketId: null, // Current socketId.
   startTime: null,
-  subscriber: {},
-})
-export function connectedState({ sessionId }, payload) {
+  // subscriber: {},
+}
+export const disconnectState = pick(defaultState, 'connected', 'connect', 'socketId', 'reconnected')
+export function connectedState(state, payload, rest) {
   return {
+    ...state,
     ...payload,
     connected: true,
     connect: false,
-    sessionId: sessionId || payload.socketId,
+    reconnected: false,
+    ...rest,
+    counter: state.counter + 1,
   }
 }
+export function connected(state, payload) {
+  return connectedState(state, payload, { sessionId: payload.socketId })
+}
+export function reconnected(state, payload) {
+  return connectedState(state, payload, { reconnected: true })
+}
 export const reducers = {
-  [CONNECT]: (state, { sessionId }) => state.merge({ connect: true, sessionId }),
-  [CONNECTED]: (state, payload) => state.merge(connectedState(state, payload)),
-  [DISCONNECT]: (state, endTime) =>
-    state.merge({ connected: false, connect: false, socketId: null, endTime }),
-  [GUEST_JOIN]: (state, payload) => state.setIn([ 'subscriber', payload ], { id: payload }),
-  [GUEST_LEAVE]: (state, payload) => state.set('subscriber', state.subscriber.without(payload)),
-  [JOINED]: (state, payload) => state.set('sessionId', payload),
-  [SUBSCRIBE]: (state, payload) => state.set('presenter', payload),
+  [CONNECT]: (state, { startTime }) => ({ ...state, connect: true, startTime }),
+  [CONNECTED]: connected,
+  [DISCONNECT]: (state, endTime) => ({ ...state, ...disconnectState, endTime }),
+  [RECONNECTED]: reconnected,
+  // [GUEST_JOIN]: (state, payload) => state.setIn([ 'subscriber', payload ], { id: payload }),
+  // [GUEST_LEAVE]: (state, payload) => state.set('subscriber', state.subscriber.without(payload)),
+  // [JOINED]: set('sessionId'),
+  // [SUBSCRIBE]: (state, payload) => state.set('presenter', payload),
 }
-export default function reducer(_state = defaultState, action) {
-  if (!action.type || !isFunction(reducers[action.type])) return _state
-  return reducers[action.type](_state.asMutable ? _state : immutable(_state), action.payload)
-}
+const reducer = createReducer(reducers, defaultState)
+export default reducer

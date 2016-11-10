@@ -1,23 +1,26 @@
 import test from 'tape'
-
+import { isString } from 'lodash'
 import reducer, { connect, connected } from '../src'
 
-test('connect', (t) => {
-  const action = connect({ sessionId: 'a12b34' })
+test('reducer connect', (t) => {
+  const action = connect()
   const state = reducer(undefined, action)
-  t.equal(state.sessionId, 'a12b34')
   t.equal(state.connect, true)
+  t.ok(isString(state.startTime), 'startTime')
   t.end()
 })
 test('connected', (t) => {
   const socketId = 'a12b34'
   const action = connected(socketId)
   const state = reducer(undefined, action)
+  t.equal(state.connect, false, 'connect')
+  t.equal(state.connected, true, 'connected')
+  t.equal(state.reconnected, false, 'reconnected')
   t.equal(state.sessionId, socketId, 'sessionId')
   t.equal(state.socketId, socketId, 'socketId')
-  t.equal(state.connect, false, 'connect')
-  const state2 = reducer(undefined, connect({ sessionId: 'a12b34' }))
-  const { sessionId } = reducer(state2, connected(socketId))
-  t.equal(sessionId, socketId)
+  const state2 = reducer(state, connected('soc2', 'steFoSo'))
+  t.equal(state2.socketId, 'soc2')
+  t.equal(state2.sessionId, 'soc2')
+  t.equal(state2.siteId, 'steFoSo')
   t.end()
 })

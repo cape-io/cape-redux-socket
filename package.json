@@ -1,6 +1,6 @@
 {
   "name": "cape-redux-socket",
-  "version": "2.2.2",
+  "version": "3.0.0",
   "description": "Get custom information about a location object or path.",
   "main": "lib/index.js",
   "scripts": {

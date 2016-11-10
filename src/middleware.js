@@ -14,7 +14,7 @@ export default function createSocketMiddleware(socket, options = {}) {
     // Wire socket.io to dispatch actions sent by the server.
     socket.on(opts.eventName, onServerAction(store))
     // When the connection is established. Before any events.
-    socket.on('connect', onConnect(store))
+    socket.on('connect', onConnect(store, socket))
     // Tell redux we are no longer connected.
     socket.on('disconnect', onDisconnect(store))
 
